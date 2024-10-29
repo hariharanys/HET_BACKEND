@@ -1,0 +1,12 @@
+@HET_BACKEND_HostAddress = http://localhost:53519/HET/Auth
+
+POST {{HET_BACKEND_HostAddress}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "UserName:"Hariharan",
+  "Password":"1qwer1"
+}
+
+###
