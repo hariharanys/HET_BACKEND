@@ -15,6 +15,14 @@ namespace HET_BACKEND.Controllers.UserProfile
         {
             _context = hETDbContext;
         }
+
+        //[HttpGet]
+        //[Authorize]
+        //public async Task<JsonResult> GetProfileDetails ([FromQuery] string profileId)
+        //{
+
+        //}
+
         [HttpPost]
         [Authorize]
         public async Task<JsonResult> AddProfileDetails([FromBody]UserProfileModel userProfileModel)

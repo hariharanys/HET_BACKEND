@@ -4,6 +4,7 @@ using HET_BACKEND.Models.Auth;
 using HET_BACKEND.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HET_BACKEND.Controllers.Authentication
 {
@@ -60,6 +61,23 @@ namespace HET_BACKEND.Controllers.Authentication
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return Json(new { message = "User registered Successfully" });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<JsonResult> UpdateUserNameAndEmail([FromBody] UserRegisterModel userRegisterModel)
+        {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u=>u.userName == userRegisterModel.userName);
+            if(existingUser==null)
+            {
+                throw new KeyNotFoundException("The given Username is not exist.");
+            }
+            existingUser.userName = userRegisterModel.userName;
+            existingUser.email = userRegisterModel.email;
+            existingUser.phoneNumber = userRegisterModel.phoneNumber;
+            _context.Users.Update(existingUser);
+            await _context.SaveChangesAsync();
+            return Json(new { Resykt = "Updated Successfully", Message = existingUser });
         }
     }
 }
