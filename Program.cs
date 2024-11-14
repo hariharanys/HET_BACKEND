@@ -1,6 +1,7 @@
 
 using HET_BACKEND.Helper;
 using HET_BACKEND.Middleware;
+using HET_BACKEND.Services.UserServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -23,6 +24,9 @@ namespace HET_BACKEND
 
             //Adding DB context
             builder.Services.AddDbContext<HETDbContext>(options=>options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            //Adding UserService Dependency
+            builder.Services.AddScoped<UserService>();
 
             //Adding JWT services
             builder.Services.AddAuthentication(options =>

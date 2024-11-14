@@ -1,5 +1,6 @@
 ﻿using HET_BACKEND.EntityModel;
 using HET_BACKEND.Models.UserProfile;
+using HET_BACKEND.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,17 +12,29 @@ namespace HET_BACKEND.Controllers.UserProfile
     public class UserProfileController : Controller
     {
         private readonly HETDbContext _context;
-        public UserProfileController(HETDbContext hETDbContext)
+        private readonly UserService _userService;
+        public UserProfileController(HETDbContext hETDbContext,UserService userService)
         {
             _context = hETDbContext;
+            _userService = userService;
         }
 
-        //[HttpGet]
-        //[Authorize]
-        //public async Task<JsonResult> GetProfileDetails ([FromQuery] string profileId)
-        //{
-
-        //}
+        [HttpGet]
+        [Authorize]
+        public async Task<JsonResult> GetProfileDetails([FromQuery] string profileId)
+        {
+            if (string.IsNullOrEmpty(profileId))
+            {
+                throw new ArgumentNullException("Enter Valid Profile Id");
+            }
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.userId == Convert.ToInt32(profileId));
+            if (existingUser is null)
+            {
+                throw new KeyNotFoundException("No User have found");
+            }
+            var userData = _userService.GetUserDetails(Convert.ToInt64(profileId));
+            return Json(new { Result = "Success", Message = userData });
+        }
 
         [HttpPost]
         [Authorize]
