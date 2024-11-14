@@ -50,7 +50,7 @@ namespace HET_BACKEND.Controllers.Authentication
                 throw new DbUpdateException("UserName already exists");
             }
             (string password, string salt) = PasswordHash.HashPassword(userRegisterModel.password ?? "password");
-            var user = new User
+            var user = new UserEntityModel
             {
                 userName = userRegisterModel.userName,
                 email = userRegisterModel.email,

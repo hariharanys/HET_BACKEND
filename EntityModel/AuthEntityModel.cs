@@ -2,7 +2,7 @@
 
 namespace HET_BACKEND.EntityModel
 {
-    public class AuthModel
+    public class AuthEntityModel
     {
         [Key]
         public int Id { get; set; }

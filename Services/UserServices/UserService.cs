@@ -1,5 +1,4 @@
-﻿using HET_BACKEND.EntityModel;
-using HET_BACKEND.ServiceModels;
+﻿using HET_BACKEND.ServiceModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace HET_BACKEND.Services.UserServices

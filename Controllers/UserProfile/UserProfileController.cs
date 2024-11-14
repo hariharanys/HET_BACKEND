@@ -44,7 +44,7 @@ namespace HET_BACKEND.Controllers.UserProfile
             if(exisitingUser != null) {
                 return await UpdateProfileDetails(exisitingUser,userProfileModel);
             }
-            var userDetails = new UserDetails
+            var userDetails = new UserDetailsEntityModel
             {
                 UserId = userProfileModel.userId,
                 FullName = userProfileModel.FullName,
@@ -61,7 +61,7 @@ namespace HET_BACKEND.Controllers.UserProfile
         }
 
         [Authorize]
-        private async Task<JsonResult> UpdateProfileDetails(UserDetails existingUserDetails,UserProfileModel userProfileModel)
+        private async Task<JsonResult> UpdateProfileDetails(UserDetailsEntityModel existingUserDetails,UserProfileModel userProfileModel)
         {
             existingUserDetails.FullName = userProfileModel.FullName;
             existingUserDetails.Address = userProfileModel.Address;

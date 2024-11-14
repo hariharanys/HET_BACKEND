@@ -16,7 +16,7 @@ namespace HET_BACKEND.Helper
             _configuration = configuration;
         }
 
-        public string GenerateJwtToken(User user)
+        public string GenerateJwtToken(UserEntityModel user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
             var credentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);

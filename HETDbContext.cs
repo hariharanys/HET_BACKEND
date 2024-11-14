@@ -7,8 +7,9 @@ namespace HET_BACKEND
     {
         public HETDbContext(DbContextOptions<HETDbContext> options) : base(options) { }
 
-        public DbSet<AuthModel> authModels { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserDetails> UserDetails { get; set; }
+        public DbSet<AuthEntityModel> authModels { get; set; }
+        public DbSet<UserEntityModel> Users { get; set; }
+        public DbSet<UserDetailsEntityModel> UserDetails { get; set; }
+        public DbSet<ExpenseEntityModel> ExpenseDetails { get; set; }
     }
 }

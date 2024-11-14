@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace HET_BACKEND.EntityModel
 {
-    public class User
+    public class UserEntityModel
     {
         [Key]
         public int userId { get; set; }
