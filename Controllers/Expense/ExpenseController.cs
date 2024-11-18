@@ -8,11 +8,9 @@ namespace HET_BACKEND.Controllers.Expense
     [Route("HET/[controller]/[action]")]
     public class ExpenseController : Controller
     {
-       private readonly HETDbContext _context;
        private readonly IExpenseService _expenseService;
-       public ExpenseController(HETDbContext context,IExpenseService expenseService)
+       public ExpenseController(IExpenseService expenseService)
         {
-            _context = context;
             _expenseService = expenseService;
         }
 
