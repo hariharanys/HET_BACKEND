@@ -2,7 +2,6 @@
 using HET_BACKEND.Models.UserProfile;
 using HET_BACKEND.ServiceModels;
 using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
 
 namespace HET_BACKEND.Services.UserServices
 {
