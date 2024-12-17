@@ -10,5 +10,7 @@
         public string? Country { get; set; }
         public string? PostalCode { get; set; }
         public string? FamilyName { get; set; }
+        public DateOnly CreatedDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        public DateOnly ModifiedDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     }
 }

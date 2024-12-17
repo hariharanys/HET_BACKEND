@@ -19,6 +19,10 @@ namespace HET_BACKEND.EntityModel
         public string? Country { get; set;}
         public string? PostalCode { get; set; } 
         public string? FamilyName { get; set; }
+        [Required]
+        public DateOnly CreatedDate { get; set; }
+        [Required]
+        public DateOnly ModifiedDate { get; set; }
 
     }
 }

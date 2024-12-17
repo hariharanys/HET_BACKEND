@@ -20,5 +20,9 @@ namespace HET_BACKEND.EntityModel
         public long Amount { get; set; }
         [Required]
         public bool IsRecurring { get; set; }
+        [Required]
+        public DateOnly CreatedDate { get; set; }
+        [Required]
+        public DateOnly ModifiedDate { get; set; }
     }
 }

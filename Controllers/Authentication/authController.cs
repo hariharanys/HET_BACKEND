@@ -1,27 +1,26 @@
-﻿using HET_BACKEND.EntityModel;
-using HET_BACKEND.Helper;
+﻿using HET_BACKEND.Helper;
 using HET_BACKEND.Models.Auth;
 using HET_BACKEND.Utilities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using HET_BACKEND.Services.AuthServices;
 
 namespace HET_BACKEND.Controllers.Authentication
 {
     [Route("HET/[controller]/[action]")]
     public class AuthController : Controller
     {
-        private readonly HETDbContext _context;
         private readonly JWTHelper _jwthelper;
-        public AuthController(HETDbContext context,JWTHelper jWTHelper)
+        private readonly IAuthService _authService;
+        public AuthController(JWTHelper jWTHelper,IAuthService authService)
         {
-            _context = context;
             _jwthelper = jWTHelper;
+            _authService = authService;
         }
         [HttpPost]
         public async Task<JsonResult> Login([FromBody]LoginModel loginModel)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.userName == loginModel.UserName);
+            var user = await _authService.GetUser(loginModel);
             if(user!=null)
             {
                 bool isValid = PasswordHash.VerifyPassword(loginModel.Password ?? "Password",user.password ?? "Password",Convert.FromHexString(user.salt ?? "salt"));
@@ -44,40 +43,16 @@ namespace HET_BACKEND.Controllers.Authentication
         [HttpPost]
         public async Task<JsonResult> Register([FromBody] UserRegisterModel userRegisterModel)
         {
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u=>u.userName==userRegisterModel.userName);
-            if (existingUser != null)
-            {
-                throw new DbUpdateException("UserName already exists");
-            }
-            (string password, string salt) = PasswordHash.HashPassword(userRegisterModel.password ?? "password");
-            var user = new UserEntityModel
-            {
-                userName = userRegisterModel.userName,
-                email = userRegisterModel.email,
-                password = password,
-                phoneNumber = userRegisterModel.phoneNumber,
-                salt = salt,
-            };
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            await _authService.RegisterUser(userRegisterModel);
             return Json(new { message = "User registered Successfully" });
         }
 
-        [HttpPost]
+        [HttpPut]
         [Authorize]
         public async Task<JsonResult> UpdateUserNameAndEmail([FromBody] UserRegisterModel userRegisterModel)
         {
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u=>u.userName == userRegisterModel.userName);
-            if(existingUser==null)
-            {
-                throw new KeyNotFoundException("The given Username is not exist.");
-            }
-            existingUser.userName = userRegisterModel.userName;
-            existingUser.email = userRegisterModel.email;
-            existingUser.phoneNumber = userRegisterModel.phoneNumber;
-            _context.Users.Update(existingUser);
-            await _context.SaveChangesAsync();
-            return Json(new { Resykt = "Updated Successfully", Message = existingUser });
+           var existingUser = await _authService.UpdateUserNameAndEmail(userRegisterModel);
+            return Json(new { Result = "Updated Successfully", Message = existingUser });
         }
     }
 }

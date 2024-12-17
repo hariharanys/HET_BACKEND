@@ -40,7 +40,9 @@ namespace HET_BACKEND.Services.UserServices
                     Country = x.Country! ?? "",
                     PostalCode = x.PostalCode! ?? "0",
                     State = x.State! ?? "",
-                    FamilyName = x.FamilyName! ?? ""
+                    FamilyName = x.FamilyName! ?? "",
+                    CreatedDate = x.CreatedDate!,
+                    ModifiedDate = x.ModifiedDate!
                 }).ToList();
                 return UserData;
             }catch (Exception ex)
@@ -72,6 +74,8 @@ namespace HET_BACKEND.Services.UserServices
                         Country = userProfileModel.Country,
                         PostalCode = userProfileModel.PostalCode,
                         FamilyName = userProfileModel.FamilyName,
+                        CreatedDate = userProfileModel.CreatedDate,
+                        ModifiedDate = userProfileModel.ModifiedDate
                     };
                     _context.UserDetails.Add(userDetails);
                     await _context.SaveChangesAsync();
@@ -101,6 +105,7 @@ namespace HET_BACKEND.Services.UserServices
                 existingUserDetails.Country = userProfileModel.Country;
                 existingUserDetails.PostalCode = userProfileModel.PostalCode;
                 existingUserDetails.FamilyName = userProfileModel.FamilyName;
+                existingUserDetails.ModifiedDate = userProfileModel.ModifiedDate;
                 _context.UserDetails.Update(existingUserDetails);
                 await _context.SaveChangesAsync();
                 return existingUserDetails;

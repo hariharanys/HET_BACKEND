@@ -22,6 +22,8 @@ namespace HET_BACKEND.Services.ExpenseServices
                 var query = _context.ExpenseDetails.AsQueryable();
                 //Selecting the data based on UserId
                 query = query.Where(x=>x.UserId == expenseFilterModel.UserId);
+                //IsRecurring Filter
+                query = query.Where(x => x.IsRecurring == expenseFilterModel.isRecurring);
                 //Search Text Filter
                 if (!string.IsNullOrWhiteSpace(expenseFilterModel.searchText)) {
                     string searchPattern = $"%{expenseFilterModel.searchText}%";
@@ -29,6 +31,7 @@ namespace HET_BACKEND.Services.ExpenseServices
                     || EF.Functions.Like(x.Category, searchPattern)
                     || EF.Functions.Like(x.Notes, searchPattern));
                 }
+                
                 //Getting Total Records
                 var totalRecords = await query.CountAsync();
                 //Selecting and assigning the Expense Records
@@ -44,7 +47,9 @@ namespace HET_BACKEND.Services.ExpenseServices
                                               PaymentMethod = x.PaymentMehtod,
                                               Notes = x.Notes,
                                               Amount = x.Amount,
-                                              IsRecurring = x.IsRecurring
+                                              IsRecurring = x.IsRecurring,
+                                              CreatedDate = x.CreatedDate,
+                                              ModifiedDate = x.ModifiedDate
                                           }).ToListAsync();
                 return new ExpenseDetailsServiceModel
                 {
@@ -54,7 +59,7 @@ namespace HET_BACKEND.Services.ExpenseServices
 
             }catch (Exception ex)
             {
-                throw new Exception("An error occurred while performing [specific action].", ex);
+                throw ex;
             }
         }
 
@@ -71,7 +76,7 @@ namespace HET_BACKEND.Services.ExpenseServices
                 return ExpenseDetail;
             }catch(Exception ex)
             {
-                throw new Exception("An error occurred while performing [specific action].", ex);
+                throw ex;
             }
         }
 
@@ -88,7 +93,9 @@ namespace HET_BACKEND.Services.ExpenseServices
                     PaymentMehtod = expenseModel.PaymentMethod,
                     Notes = expenseModel.Notes,
                     Amount = expenseModel.Amount,
-                    IsRecurring = expenseModel.IsRecurring
+                    IsRecurring = expenseModel.IsRecurring,
+                    CreatedDate = expenseModel.CreatedDate,
+                    ModifiedDate = expenseModel.ModifiedDate
                 };
                 _context.ExpenseDetails.Add(expenses);
                 await _context.SaveChangesAsync();
@@ -96,7 +103,7 @@ namespace HET_BACKEND.Services.ExpenseServices
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while performing [specific action].", ex);
+                throw ex;
             }
         }
 
@@ -117,13 +124,15 @@ namespace HET_BACKEND.Services.ExpenseServices
                 existingExpense.Notes = expenseModel.Notes;
                 existingExpense.Amount = expenseModel.Amount;
                 existingExpense.IsRecurring = expenseModel.IsRecurring;
+                existingExpense.CreatedDate = expenseModel.CreatedDate;
+                existingExpense.ModifiedDate = expenseModel.ModifiedDate;
                 _context.ExpenseDetails.Update(existingExpense);
                 await _context.SaveChangesAsync();
                 return existingExpense;
             }
             catch(Exception ex)
             {
-                throw new Exception("An error occurred while performing [specific action].", ex);
+                throw ex;
             }
         }
     }

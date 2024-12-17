@@ -7,5 +7,7 @@
         public string? email { get; set; }
         public string? phoneNumber { get; set; }
         public string? salt { get; set; }
+        public DateOnly CreatedDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        public DateOnly ModifiedDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     }
 }

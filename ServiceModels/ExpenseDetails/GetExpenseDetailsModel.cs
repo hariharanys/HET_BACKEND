@@ -10,5 +10,7 @@
         public string Notes { get; set; } = string.Empty;
         public long Amount { get; set; } = 0;
         public bool IsRecurring { get; set; } = false;
+        public DateOnly CreatedDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        public DateOnly ModifiedDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     }
 }

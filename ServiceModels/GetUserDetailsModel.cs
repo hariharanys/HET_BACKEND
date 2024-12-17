@@ -14,6 +14,8 @@
         public string PostalCode { get; set; } = string.Empty;
         public string State { get; set; } = string.Empty;
         public string FamilyName { get; set; } = string.Empty;
+        public DateOnly CreatedDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        public DateOnly ModifiedDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
     }
 }

@@ -14,6 +14,10 @@ namespace HET_BACKEND.EntityModel
         public string PhoneNumber {  get; set; }
         [Required]
         public string Password { get; set; }
+        [Required]
+        public DateOnly CreatedDate { get; set; }
+        [Required]
+        public DateOnly ModifiedDate { get; set; }
 
     }
 }
