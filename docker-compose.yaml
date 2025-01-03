@@ -9,11 +9,6 @@
     environment:
         - ASPNETCORE_URLS=http://+:8080
         - ASPNETCORE_ENVIRONMENT = Development
-        - ConnectionsStrings__DefaultConnection=Host=194.238.22.195;Port=5432;database=HET;username=hariharan;password=08Jl2000@:-);TrustServerCertificate=true;
-        - JWT__Key=Hari-Expense-Tracker-To-Track-Your-Day-To-Day-Expenses
-        - JWT__Issuer=HET
-        - JWT__ExpireMinutes=10
-        - JWT__Audience=HETONS
 networks:
     default:
         name: het_network
