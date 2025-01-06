@@ -1,0 +1,14 @@
+﻿services:
+  webapi:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    image: het_backend
+    ports:
+        - "5003:8080"
+    environment:
+        - ASPNETCORE_URLS=http://+:8080
+        - ASPNETCORE_ENVIRONMENT = Development
+networks:
+    default:
+        name: het_network
